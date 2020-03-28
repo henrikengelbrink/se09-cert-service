@@ -29,7 +29,7 @@ class UserWebService {
         )
         val response = httpClient.toBlocking().exchange(
                 POST("/mqtt/register", payload).contentType(MediaType.APPLICATION_JSON),
-                Map::class.java
+                String::class.java
         )
         LOG.info("loginValid status: ${response.status.code}")
         return response.status == HttpStatus.OK
