@@ -20,7 +20,7 @@ class DeviceWebService {
     private val LOG: Logger = LoggerFactory.getLogger(DeviceWebService::class.java)
 
     fun loginValid(dto: VerneMQRegisterDTO): Boolean {
-        LOG.info("getUserIdFromToken")
+        LOG.info("loginValid")
         val httpClient = RxHttpClient.create(URL(deviceServiceUrl))
         val payload = mapOf(
                 "username" to dto.username,
@@ -31,6 +31,7 @@ class DeviceWebService {
                 POST("/device/mqtt/auth", payload).contentType(MediaType.APPLICATION_JSON),
                 Map::class.java
         )
+        LOG.info("loginValid status: ${response.status.code}")
         return response.status == HttpStatus.OK
     }
 

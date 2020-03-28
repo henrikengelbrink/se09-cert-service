@@ -24,6 +24,7 @@ class VerneMQService {
     }
 
     private fun deviceCredentialsValid(dto: VerneMQRegisterDTO): Boolean {
+        LOG.info("deviceCredentialsValid")
         return deviceWebService.loginValid(dto)
     }
 
