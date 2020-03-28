@@ -4,6 +4,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import se09.cert.service.models.ClientType
 import se09.cert.service.ws.DeviceWebService
+import se09.cert.service.ws.UserWebService
 import se09.device.service.dto.VerneMQPublishDTO
 import se09.device.service.dto.VerneMQRegisterDTO
 import se09.device.service.dto.VerneMQSubscribeDTO
@@ -14,6 +15,9 @@ class VerneMQService {
 
     @Inject
     private lateinit var deviceWebService: DeviceWebService
+
+    @Inject
+    private lateinit var userWebService: UserWebService
 
     private val LOG: Logger = LoggerFactory.getLogger(VerneMQService::class.java)
 
@@ -31,12 +35,7 @@ class VerneMQService {
 
     private fun userCredentialsValid(dto: VerneMQRegisterDTO): Boolean {
         LOG.info("userCredentialsValid")
-        LOG.info("username ${dto.username}")
-        LOG.info("password ${dto.password}")
-        LOG.info("clientId ${dto.clientId}")
-        LOG.info("clientType ${dto.clientType}")
-        LOG.info("fullClientId ${dto.fullClientId}")
-        return true
+        return userWebService.loginValid(dto)
     }
 
     fun isAllowedToSubscribe(dto: VerneMQSubscribeDTO): Boolean {
