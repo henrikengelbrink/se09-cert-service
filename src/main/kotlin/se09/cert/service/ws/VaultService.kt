@@ -45,7 +45,7 @@ class VaultService(
         val token = bufferedReader.use { it.readText() }
         println("*********** TOKEN $token")
         val body = mapOf(
-                "role" to "device-service-role",
+                "role" to "cert-service-role",
                 "jwt" to token
         )
         val request = HttpRequest.POST("/v1/auth/kubernetes/login", body)
