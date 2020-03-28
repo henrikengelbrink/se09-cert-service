@@ -4,10 +4,13 @@ micronaut:
   server:
     port: 7878
   http:
+    client:
+      exception-on-error-status: false
     services:
       vault:
         urls:
           - ${VAULT_URL}
+
 datasources:
   default:
     url: ${POSTGRES_HOST}
