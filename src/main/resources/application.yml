@@ -33,3 +33,4 @@ flyway:
 service:
   url:
     device: ${DEVICE_SERVICE_URL}
+    user: ${USER_SERVICE_URL}
