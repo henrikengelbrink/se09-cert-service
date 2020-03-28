@@ -4,6 +4,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import se09.cert.service.models.ClientType
 import se09.cert.service.ws.DeviceWebService
+import se09.device.service.dto.VerneMQPublishDTO
 import se09.device.service.dto.VerneMQRegisterDTO
 import se09.device.service.dto.VerneMQSubscribeDTO
 import javax.inject.Inject
@@ -46,11 +47,28 @@ class VerneMQService {
     }
 
     private fun deviceIsAllowedToSubscribe(dto: VerneMQSubscribeDTO): Boolean {
+        LOG.info("deviceIsAllowedToSubscribe ${dto.clientId} == ${dto.deviceIdTopic()}")
+        return dto.clientId == dto.deviceIdTopic()
+    }
+
+    private fun userIsAllowedToSubscribe(dto: VerneMQSubscribeDTO): Boolean {
         // Todo
         return true
     }
 
-    private fun userIsAllowedToSubscribe(dto: VerneMQSubscribeDTO): Boolean {
+    fun isAllowedToPublish(dto: VerneMQPublishDTO): Boolean {
+        return when(dto.clientType) {
+            ClientType.DEVICE -> deviceIsAllowedToPublish(dto)
+            ClientType.USER -> userIsAllowedToPublish(dto)
+        }
+    }
+
+    private fun deviceIsAllowedToPublish(dto: VerneMQPublishDTO): Boolean {
+        LOG.info("deviceIsAllowedToPublish ${dto.clientId} == ${dto.deviceIdTopic()}")
+        return dto.clientId == dto.deviceIdTopic()
+    }
+
+    private fun userIsAllowedToPublish(dto: VerneMQPublishDTO): Boolean {
         // Todo
         return true
     }

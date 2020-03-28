@@ -8,6 +8,7 @@ import io.micronaut.http.annotation.Post
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import se09.cert.service.services.VerneMQService
+import se09.device.service.dto.VerneMQPublishDTO
 import se09.device.service.dto.VerneMQRegisterDTO
 import se09.device.service.dto.VerneMQSubscribeDTO
 import javax.inject.Inject
@@ -59,10 +60,22 @@ class VerneMQController {
     }
 
     @Post("/auth_on_publish", produces = [MediaType.APPLICATION_JSON])
-    fun authOnPublish(@Body body: Map<String, Any>): Map<String, Any> {
-        LOG.info("auth_on_publish -> $body")
-        return mapOf("result" to "ok")
-        //return mapOf("result" to mapOf("error" to "not_allowed"))
+    fun authOnPublish(@Body dto: VerneMQPublishDTO): HttpResponse<Map<String, Any>> {
+        LOG.info("auth_on_publish")
+        return if (verneMQService.isAllowedToPublish(dto)) {
+            HttpResponse.ok(
+                    mapOf(
+                            "result" to "ok"
+                    )
+            )
+        } else {
+            HttpResponse.ok(
+                    mapOf(
+                            "result" to mapOf(
+                                    "error" to "not_allowed")
+                    )
+            )
+        }
     }
 
 
