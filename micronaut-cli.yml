@@ -1,0 +1,5 @@
+profile: service
+defaultPackage: se09.cert.service
+---
+testFramework: kotlintest
+sourceLanguage: kotlin

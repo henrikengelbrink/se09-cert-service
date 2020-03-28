@@ -1,0 +1,31 @@
+micronaut:
+  application:
+    name: se09-cert-service
+  server:
+    port: 7878
+  http:
+    services:
+      vault:
+        urls:
+          - ${VAULT_URL}
+datasources:
+  default:
+    url: ${POSTGRES_HOST}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    driverClassName: 'org.postgresql.Driver'
+    maximumPoolSize: 3
+    minimumIdle: 2
+jpa:
+  default:
+    packages-to-scan:
+      - 'se09.cert.service'
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: none
+#        show_sql: true
+flyway:
+  datasources:
+    default:
+      locations: classpath:databasemigrations
