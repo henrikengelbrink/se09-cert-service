@@ -28,7 +28,7 @@ class DeviceWebService {
                 "clientId" to dto.clientId
         )
         val response = httpClient.toBlocking().exchange(
-                POST("/device/mqtt/auth", payload).contentType(MediaType.APPLICATION_JSON),
+                POST("/mqtt/register", payload).contentType(MediaType.APPLICATION_JSON),
                 Map::class.java
         )
         LOG.info("loginValid status: ${response.status.code}")
