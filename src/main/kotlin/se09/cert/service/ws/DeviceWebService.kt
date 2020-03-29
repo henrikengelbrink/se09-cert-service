@@ -35,4 +35,20 @@ class DeviceWebService {
         return response.status == HttpStatus.OK
     }
 
+    fun userPubSubAllowed(username: String, clientId: String, topic: String): Boolean {
+        LOG.info("userPubSubAllowed")
+        val httpClient = RxHttpClient.create(URL(deviceServiceUrl))
+        val payload = mapOf(
+                "username" to username,
+                "clientId" to clientId,
+                "topic" to topic
+        )
+        val response = httpClient.toBlocking().exchange(
+                POST("/user/topic", payload).contentType(MediaType.APPLICATION_JSON),
+                Map::class.java
+        )
+        LOG.info("loginValid status: ${response.status.code}")
+        return response.status == HttpStatus.OK
+    }
+
 }

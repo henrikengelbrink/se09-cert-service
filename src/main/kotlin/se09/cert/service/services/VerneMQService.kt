@@ -51,8 +51,11 @@ class VerneMQService {
     }
 
     private fun userIsAllowedToSubscribe(dto: VerneMQSubscribeDTO): Boolean {
-        // Todo
-        return true
+        return deviceWebService.userPubSubAllowed(
+                username = dto.username,
+                clientId = dto.clientId,
+                topic = dto.deviceIdTopic()
+        )
     }
 
     fun isAllowedToPublish(dto: VerneMQPublishDTO): Boolean {
@@ -68,8 +71,11 @@ class VerneMQService {
     }
 
     private fun userIsAllowedToPublish(dto: VerneMQPublishDTO): Boolean {
-        // Todo
-        return true
+        return deviceWebService.userPubSubAllowed(
+                username = dto.username,
+                clientId = dto.clientId,
+                topic = dto.deviceIdTopic()
+        )
     }
 
 }
