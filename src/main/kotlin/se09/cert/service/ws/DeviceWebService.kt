@@ -44,7 +44,7 @@ class DeviceWebService {
                 "topic" to topic
         )
         val response = httpClient.toBlocking().exchange(
-                POST("/user/topic", payload).contentType(MediaType.APPLICATION_JSON),
+                POST("/mqtt/user/topic", payload).contentType(MediaType.APPLICATION_JSON),
                 Map::class.java
         )
         LOG.info("loginValid status: ${response.status.code}")
