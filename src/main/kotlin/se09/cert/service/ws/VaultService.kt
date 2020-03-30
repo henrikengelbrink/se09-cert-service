@@ -20,9 +20,7 @@ class VaultService(
 ) {
 
     fun generateCertificate(clientId: String, type: ClientType): VaultCertResponseDTO {
-        println("generateCertificate")
         val token = getVaultToken()
-        println("######### VAULT TOKEN $token")
         val ttlSeconds = 2181246468 - Instant.now().epochSecond
         val hours = ttlSeconds / 3600
 
@@ -34,16 +32,13 @@ class VaultService(
         request.headers.add("Content-Type", "application/json")
         request.headers.add("X-Vault-Token", token)
         val response = httpClient.toBlocking().retrieve(request)
-        println(response)
         val jsonResponse = Klaxon().parse<VaultCertResponseDTO>(response)
         return jsonResponse!!
     }
 
     private fun getVaultToken(): String {
-        println("getVaultToken")
         val bufferedReader: BufferedReader = File("/var/run/secrets/kubernetes.io/serviceaccount/token").bufferedReader()
         val token = bufferedReader.use { it.readText() }
-        println("*********** TOKEN $token")
         val body = mapOf(
                 "role" to "cert-service-role",
                 "jwt" to token
@@ -51,7 +46,6 @@ class VaultService(
         val request = HttpRequest.POST("/v1/auth/kubernetes/login", body)
         request.headers.add("Content-Type", "application/json")
         val response = httpClient.toBlocking().retrieve(request)
-        println(response)
         val jsonResponse = Klaxon().parse<VaultLoginResponseDTO>(response)
         return jsonResponse!!.auth.token
     }

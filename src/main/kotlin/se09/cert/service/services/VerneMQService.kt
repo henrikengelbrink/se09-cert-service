@@ -1,7 +1,5 @@
 package se09.cert.service.services
 
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import se09.cert.service.models.ClientType
 import se09.cert.service.ws.DeviceWebService
 import se09.cert.service.ws.UserWebService
@@ -19,8 +17,6 @@ class VerneMQService {
     @Inject
     private lateinit var userWebService: UserWebService
 
-    private val LOG: Logger = LoggerFactory.getLogger(VerneMQService::class.java)
-
     fun credentialsValid(dto: VerneMQRegisterDTO): Boolean {
         return when(dto.clientType) {
             ClientType.DEVICE -> deviceCredentialsValid(dto)
@@ -29,12 +25,10 @@ class VerneMQService {
     }
 
     private fun deviceCredentialsValid(dto: VerneMQRegisterDTO): Boolean {
-        LOG.info("deviceCredentialsValid")
         return deviceWebService.loginValid(dto)
     }
 
     private fun userCredentialsValid(dto: VerneMQRegisterDTO): Boolean {
-        LOG.info("userCredentialsValid")
         return userWebService.loginValid(dto)
     }
 
@@ -46,7 +40,6 @@ class VerneMQService {
     }
 
     private fun deviceIsAllowedToSubscribe(dto: VerneMQSubscribeDTO): Boolean {
-        LOG.info("deviceIsAllowedToSubscribe ${dto.clientId} == ${dto.deviceIdTopic()}")
         return dto.clientId == dto.deviceIdTopic()
     }
 
@@ -66,7 +59,6 @@ class VerneMQService {
     }
 
     private fun deviceIsAllowedToPublish(dto: VerneMQPublishDTO): Boolean {
-        LOG.info("deviceIsAllowedToPublish ${dto.clientId} == ${dto.deviceIdTopic()}")
         return dto.clientId == dto.deviceIdTopic()
     }
 
