@@ -1,4 +1,4 @@
-package se09.device.service.exceptions
+package se09.cert.service.exceptions
 
 import io.micronaut.http.HttpStatus
 
